@@ -1,3 +1,5 @@
+#실전활용! 텐서플로 딥러닝 프로젝트 1장 표지판 파일 응용
+
 import matplotlib.pyplot as plt
 import glob
 from skimage.color import rgb2lab
@@ -110,15 +112,15 @@ model.summary()
 
 
 
-# 모델의 실행
+
 model.fit(X_train, y_train, batch_size=32, epochs=10, shuffle=True, validation_data=(X_test, y_test))
 model.layers[12].get_weights()
 model.evaluate(X_test, y_test, batch_size=1000)    
 
 
-# 테스트 정확도 출력
+
 print("\n Test Accuracy: %.4f" % (model.evaluate(X_test, y_test)[1]))
-# 테스트 셋의 오차
+
 y_vloss = history.history['val_loss']
-# 학습셋의 오차
+
 y_loss = history.history['loss']
