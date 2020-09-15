@@ -21,12 +21,12 @@ if gpus:
         print(e)
 
 
-# 변환하려는 이미지 경로
+
 target_image_path = './data4/tubingen.jpg'
-# 스타일 이미지 경로
+
 style_reference_image_path = './data4/starry-night.jpg'
 
-# 생성된 사진의 차원
+
 width, height = load_img(target_image_path).size
 img_height = 600
 img_width = int(width * img_height / height)
@@ -49,11 +49,11 @@ def deprocess_image(x):
         x = x.transpose((1, 2, 0))
     else:
         x = x.reshape((img_height, img_width, 3))
-    # ImageNet의 평균 픽셀 값을 더합니다
+    
     x[:, :, 0] += 103.3939
     x[:, :, 1] += 116.6779
     x[:, :, 2] += 123.368
-    # 'BGR'->'RGB'
+   
     x = x[:, :, ::-1]
     x = np.clip(x, 0, 255).astype('uint8')
     return x
@@ -63,14 +63,13 @@ from keras import backend as K
 target_image = K.constant(preprocess_image(target_image_path))
 style_reference_image = K.constant(preprocess_image(style_reference_image_path))
 
-# 생성된 이미지를 담을 플레이스홀더
+
 combination_image = K.placeholder((1, img_height, img_width, 3))
 
-# 세 개의 이미지를 하나의 배치로 합칩니다
+
 input_tensor = K.concatenate([target_image, style_reference_image, combination_image], axis=0)
 
-# 세 이미지의 배치를 입력으로 받는 VGG 네트워크를 만듭니다.
-# 이 모델은 사전 훈련된 ImageNet 가중치를 로드합니다
+
 model = vgg19.VGG19(input_tensor=input_tensor, weights='imagenet', include_top=False)
 
 def content_loss(base, combination):
@@ -97,22 +96,22 @@ def total_variation_loss(x):
 
 
 
- # 층 이름과 활성화 텐서를 매핑한 딕셔너리
+ 
 outputs_dict = dict([(layer.name, layer.output) for layer in model.layers])
-# 콘텐츠 손실에 사용할 층
+
 content_layer = 'block5_conv2'
-# 스타일 손실에 사용할 층
+
 style_layers = ['block1_conv1',
                 'block2_conv1',
                 'block3_conv1',
                 'block4_conv1',
                 'block5_conv1']
-# 손실 항목의 가중치 평균에 사용할 가중치
+
 total_variation_weight = 20
 style_weight = 100
 content_weight = 1
 
-# 모든 손실 요소를 더해 하나의 스칼라 변수로 손실을 정의합니다
+
 loss = K.variable(0.0)
 layer_features = outputs_dict['block5_conv2']
 target_image_features = layer_features[0, :, :, :]
@@ -126,10 +125,10 @@ for layer_name in style_layers:
     loss = loss + (style_weight / len(style_layers)) * sl
 loss = loss + total_variation_weight * total_variation_loss(combination_image)
 
-# 손실에 대한 생성된 이미지의 그래디언트를 구합니다
+
 grads = K.gradients(loss, combination_image)
 
-# 현재 손실과 그래디언트의 값을 추출하는 케라스 Function 객체입니다
+
 
 outputs = [loss]
 if isinstance(grads, (list, tuple)):
@@ -180,9 +179,7 @@ from scipy.optimize import fmin_l_bfgs_b
 result_file = './data4/style_transfer_result.jpg'
 iterations = 100
 
-# 뉴럴 스타일 트랜스퍼의 손실을 최소화하기 위해 생성된 이미지에 대해 L-BFGS 최적화를 수행합니다
-# 초기 값은 타깃 이미지입니다
-# scipy.optimize.fmin_l_bfgs_b 함수가 벡터만 처리할 수 있기 때문에 이미지를 펼칩니다.
+
 x = preprocess_image(target_image_path)
 x = x.flatten()
 for i in range(iterations):
@@ -195,9 +192,9 @@ for i in range(iterations):
 
     if i % 100 == 0:
         print('.', end=' ')
-        print('현재 손실 값:', min_val)
+        print('손실 값:', min_val)
 
-# 생성된 현재 이미지를 저장합니다
+
 img = x.copy().reshape((img_height, img_width, 3))
 img = deprocess_image(img)
 
@@ -205,15 +202,15 @@ save_img(result_file, img)
 
 from matplotlib import pyplot as plt
 
-# 콘텐츠 이미지
+
 plt.imshow(load_img(target_image_path, target_size=(img_height, img_width)))
 plt.figure()
 
-# 스타일 이미지
+
 plt.imshow(load_img(style_reference_image_path, target_size=(img_height, img_width)))
 plt.figure()
 
-# 생성된 이미지
+
 plt.imshow(img)
 plt.show()
 
