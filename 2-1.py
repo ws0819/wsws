@@ -33,8 +33,8 @@ np.random.seed(101)
 
 Dataset = namedtuple('Dataset', ['X', 'y'])
 
-N_CLASSES = 43
-RESIZED_IMAGE = (32, 32)
+aa = 43
+bb = (32, 32)
 
 
 
@@ -64,7 +64,7 @@ def read_dataset_ppm(rootpath, n_labels, resize_to):
   return Dataset(X = to_tf_format(images).astype(np.float32),
                  y = np.matrix(labels).astype(np.float32))
 
-dataset = read_dataset_ppm('GTSRB/Final_Training/Images', N_CLASSES, RESIZED_IMAGE)
+dataset = read_dataset_ppm('GTSRB/Final_Training/Images', aa, bb)
 
 from sklearn.model_selection import train_test_split
 idx_train, idx_test = train_test_split(range(dataset.X.shape[0]), test_size=0.25, random_state=101)
@@ -131,5 +131,5 @@ model.fit(X_train
 model.layers[6].get_weights()
 model.evaluate(X_test, y_test, batch_size=1000)
 
-# 테스트 정확도 출력
+
 print("\n Test Accuracy: %.4f" % (model.evaluate(X_test, y_test)[1]))
