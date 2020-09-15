@@ -1,3 +1,6 @@
+# 미술관에 GAN 딥러닝 실전 프로젝트 변형
+
+
 from tensorflow.keras.layers import Input, Flatten, Dense, Conv2D, BatchNormalization, LeakyReLU, Dropout, Activation
 from tensorflow.keras.models import Model
 from tensorflow.keras.models import Sequential
@@ -22,15 +25,14 @@ if gpus:
     # Memory growth must be set before GPUs have been initialized
     print(e)
 
-# 데이터 불러오기
 
-NUM_CLASSES = 10
+aa = 10
 
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
-y_train = to_categorical(y_train, NUM_CLASSES)
-y_test = to_categorical(y_test, NUM_CLASSES)
+y_train = to_categorical(y_train, aa)
+y_test = to_categorical(y_test, aa)
 
 
 # 컨볼루션 신경망의 설정
@@ -58,7 +60,7 @@ opt = Adam(lr=0.0005)
 model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 model.summary()
 
-# 모델의 실행
+
 model.fit(x_train, y_train, batch_size=32, epochs=10, shuffle=True, validation_data=(x_test, y_test))
 
 model.layers[6].get_weights()
