@@ -1,3 +1,5 @@
+#실전활용! 텐서플로 딥러닝 프로젝트 표지판 활용 CNN
+
 import matplotlib.pyplot as plt
 import glob
 from skimage.color import rgb2lab
