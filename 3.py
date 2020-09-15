@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+#실전활용! 텐서플로 딥러닝 프로젝트 표지판 활용 GAN
+#아직 좀더 수정
 from tensorflow.keras.datasets import cifar10
 
 from tensorflow.keras.layers import Input, Dense, Reshape, Flatten, Dropout
