@@ -1,4 +1,4 @@
-# 미술관에 GAN 딥러닝 실전 프로젝트 변형
+# 미술관에 GAN 딥러닝 실전 프로젝트 코드 응용 변형
 
 
 from tensorflow.keras.layers import Input, Flatten, Dense, Conv2D, BatchNormalization, LeakyReLU, Dropout, Activation
