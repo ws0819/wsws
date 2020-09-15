@@ -88,7 +88,6 @@ for mb in minibatcher(X_train, y_train, 10000, True):
 
 
 
-# 컨볼루션 신경망의 설정
 model = Sequential()
 model.add(Conv2D(input_shape=(32, 32, 1), filters = 32, kernel_size=(5, 5), padding = 'same'))
 model.add(MaxPooling2D(pool_size=2))
