@@ -1,3 +1,7 @@
+# 미술관에 GAN 딥러닝 실전 프로젝트
+# 뉴럴 스타일 트랜스퍼
+# 책에 있는 코드가 안되서 약간 
+
 from keras.preprocessing.image import load_img, img_to_array, save_img
 import tensorflow as tf
 
