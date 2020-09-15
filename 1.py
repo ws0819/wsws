@@ -35,7 +35,7 @@ y_train = to_categorical(y_train, aa)
 y_test = to_categorical(y_test, aa)
 
 
-# 컨볼루션 신경망의 설정
+
 model = Sequential()
 model.add(Conv2D(input_shape=(32, 32, 3), filters = 32, kernel_size=(3, 3), strides = (1,1), padding = 'same'))
 model.add(BatchNormalization())
