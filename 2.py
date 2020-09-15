@@ -1,4 +1,4 @@
-#실전활용! 텐서플로 딥러닝 프로젝트 1장 표지판 파일 응용
+#실전활용! 텐서플로 딥러닝 프로젝트 1장 표지판 파일 응용 CNN
 
 import matplotlib.pyplot as plt
 import glob
